@@ -13,14 +13,16 @@
                     </div>
                   </form>
                 </div>
-                <div>
-                  {% if results %}
-                    {% for result in results %}
-                    <div>{{result}}</div>
-                    {% endfor %}
-                  {% endif %}
-                </div>
               </div>
+              {% if results %}
+              <div>
+                  {% for result in results %}
+                  <h3>{{result["title"]}} </h3>
+                  <div>{{"Avg score: " +result["ratingAverage"]|string}}</div>
+                  <div>{{"url: " +result["links"]["self"]["href"]|string}}</div>
+                  {% endfor %}
+              </div>
+              {% endif %}
             </nav>
           </div>
 
