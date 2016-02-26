@@ -26,24 +26,37 @@ collection = db['recipes']
 
 # searches in the title rank higher than matches in the body
 # so we handle this by setting weights on the fields below
-# collection.ensure_index([
-#       ('title', 'text'),
-#       ('description', 'text'),
-#   ],
-#   name="search_index",
-#   weights={
-#       'title':100,
-#       'description':25
-#   }
-# )
+collection.ensure_index([
+      ('title', 'text')
+  ],
+  name="search_index",
+  weights={
+      'title':100,
+      'description':25
+  }
+)
 
 
 def get_matches(query):
     '''Takes in the user's search box input and returns the
     matching results from the mongodb database'''
    # query = request.form['q']
-    text_results = collection.find({"$text": {"$search": query}})
-    results = [doc["title"] for doc in text_results]
+
+   #  text_results = collection.find({"$text": {"$search": query}})
+   #  results = [doc["title"] for doc in text_results]
+   #  print results
+   #  return results
+
+    text_results = collection.aggregate(
+        [
+            {"$match": {"$text": {"$search": query}}},
+            {"$sort": {
+                "ratingAverage": -1
+            }},
+            {"$limit": 5}
+        ])
+    results = [doc for doc in text_results]
+    #print (results)
     return results
 
     #doc_matches = [res['obj'] for res in text_results['results']]
