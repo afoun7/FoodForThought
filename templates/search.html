@@ -17,7 +17,9 @@
                 </div>
                 <div>
                   {% if results %}
-                  <span> {{results}} </span>
+                    {% for result in results %}
+                    <div>{{result}}</div>
+                    {% endfor %}
                   {% endif %}
                 </div>
 

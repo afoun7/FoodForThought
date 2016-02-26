@@ -42,10 +42,10 @@ def get_matches(query):
     '''Takes in the user's search box input and returns the
     matching results from the mongodb database'''
    # query = request.form['q']
-    text_results = collection.where({"$text" => {"$search" => query}})
-    for doc in text_results:
-        print (doc)
-        return doc["title"]
+    text_results = collection.find({"$text": {"$search": query}})
+    results = [doc["title"] for doc in text_results]
+    return results
+
     #doc_matches = [res['obj'] for res in text_results['results']]
     # text_results = db.command('text', 'recipes', search=query, limit=2)
     # doc_matches = [res['obj'] for res in text_results['results']]
