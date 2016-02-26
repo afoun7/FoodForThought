@@ -19,17 +19,15 @@ def search():
  		results = recipeQueries.get_matches(query)
 	return render_template('search.html' ,results=results)
 
-@app.route('/searchResults', methods=['POST', 'GET']) 
-def search_results():
- 	#recipeQueries.get_matches(request.get('id'))
- 	#recipeQueries.get_matches(request.json['id'])
- 	print "in search_results"
- 	if request.method=='POST':
- 		print "in search_results if"
- 		query = request.json['id']
- 		results = recipeQueries.get_matches(query)
- 		print (results)
-	return render_template("searchResults.html")
+# @app.route('/searchResults', methods=['POST', 'GET']) 
+# def search_results():
+#  	#recipeQueries.get_matches(request.get('id'))
+#  	#recipeQueries.get_matches(request.json['id'])
+#  	if request.method=='POST':
+#  		query = request.json['id']
+#  		results = recipeQueries.get_matches(query)
+#  		print (results)
+# 	return render_template("searchResults.html")
 
 
 if __name__ == '__main__':
