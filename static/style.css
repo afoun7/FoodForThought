@@ -1,3 +1,18 @@
 body {
-    background: beige;
+    background-color: #D0D0D0;
+}
+
+h1 {
+	font-size:100px;
+	text-align:center;
+	margin-top: 50%;
+}
+
+.centered_div {
+	position:absolute;
+	top:30%;
+	bottom:50%;
+	margin-left:50%;
+	margin-right:50%;
+	display: block;
 }

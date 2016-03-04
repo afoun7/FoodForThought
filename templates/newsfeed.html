@@ -1,12 +1,11 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
-
     <div class="collapse navbar-collapse" id="dropdown-thumbnail-preview">
 
-      <ul class="nav navbar-nav navbar-left">
+      <ul class="nav navbar-nav pull-left" style="float:left">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
           <ul class="dropdown-menu" role="menu" aria-label="Left Align">
@@ -20,7 +19,7 @@
       </ul>
 
       <div class="navbar-header">
-      <!-- <a class="navbar-brand" href="#">Food for Thought</a> -->
+      <a class="navbar-brand" text-align:"center" href="#">Newsfeed</a>
       </div>
 
       <form method="POST" action="/search" class="navbar-form navbar-left">
