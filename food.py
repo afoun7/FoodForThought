@@ -82,11 +82,9 @@ def register_page():
                 flash("Thank you for registering!")
                 session['logged_in'] = True
                 session['username'] = username
-                print "in here!"
-                return redirect(url_for("search"))
+                return redirect(url_for("search")) # if registration was successful, 
 
             except DuplicateKeyError: 
-                print "sucks"
                 flash("Username already taken. Please choose another.")
                 return render_template('register.html', form=form)
         
@@ -97,6 +95,7 @@ def register_page():
 
 
 # OTHER
+
 @app.route('/')
 @app.route('/search' , methods=['POST', 'GET'])
 def search():
@@ -112,10 +111,10 @@ def search():
 def newsfeed():
 	return render_template('newsfeed.html')
 
-@app.route('/test')
-def test():
-    flash("IT IS WORKING YAY")
-    return
+@app.route('/welcome')
+def welcome():
+    return render_template('welcome.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

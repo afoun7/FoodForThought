@@ -15,4 +15,9 @@ function getSearchRequest() {
     	}
     });
 };
-                     
+
+// clicking hamburger menu button
+$('#sidebar-btn').click(function() {
+  $('#sidebar').toggleClass('visible');
+});
+               

@@ -5,42 +5,30 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Food for Thought</title>
         
-        <link rel="stylesheet" type="text/css" href="static/style.css">
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
     </head>
     <body>
 
+<!-- gets the flash messages from flask to show up -->
   {% with messages = get_flashed_messages() %}
     {% if messages %}
       {% for message in messages %}
-      <div class="alert alert-warning alert-dismissible" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-      {{message}}
-      </div>
-    {% endfor %}
+        <div class="alert alert-warning alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+        {{message}}
+        </div>
+      {% endfor %}
     {% endif %}
   {% endwith %}
 
-<!--       {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          <ul class=flashes>
-          {% for message in messages %}
-            <li>{{ message }}</li>
-          {% endfor %}
-          </ul>
-        {% endif %}
-      {% endwith %} -->
-
-      <div class=page>
- <!--        <h1>Food for Thought</h1> -->
-        <div class=metanav>
-
-
-
-        {% block body %}{% endblock %}
-      </div>
+  {% block body %}{% endblock %}
+     
     </body>
 </html>
