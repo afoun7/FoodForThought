@@ -1,3 +1,4 @@
+// search bar
 function getSearchRequest() {
     console.log("in getSearchRequest");
     var x = document.getElementById("userSearch").value;
@@ -16,8 +17,3 @@ function getSearchRequest() {
     });
 };
 
-// clicking hamburger menu button
-$('#sidebar-btn').click(function() {
-  $('#sidebar').toggleClass('visible');
-});
-               

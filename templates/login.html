@@ -1,11 +1,12 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<!-- {% if current_user.is_authenticated %}
-  Hi {{ current_user.name }}!
-{% endif %} -->
+<!-- static navbar at the top --> 
+<div data-role="header">
+  <h1>Log In</h1>
+</div>
 	
-        <form action="" method="POST" name="form">
+        <form action="" method="POST" name="form" class="ui-content">
             <div class="col-md-4 col-md-offset-4">
                 {{ form.hidden_tag() }}
                 <div class="form-group">

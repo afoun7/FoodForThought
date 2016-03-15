@@ -1,10 +1,11 @@
 # Amanda Foun
 
-from flask import Flask, render_template, request, jsonify, redirect, flash, session
+from flask import Flask, render_template, request, jsonify, redirect, flash, session, g
 from flask.ext.login import LoginManager, UserMixin, login_required, login_user, logout_user, url_for
 from forms import LoginForm  
 from user import User
-from flask.ext.wtf import Form  
+from flask.ext.wtf import Form 
+from functools import wraps 
 from wtforms import StringField, PasswordField, Form, BooleanField, TextField, validators
 from wtforms.validators import DataRequired
 from werkzeug.security import generate_password_hash
@@ -29,7 +30,6 @@ def login():
     if request.method == 'POST' and form.validate_on_submit():
         user = app.config['USERS_COLLECTION'].find_one({"_id": form.username.data})
         if user and User.validate_login(user['password'], form.password.data): # ensure that user exists
-        	print "worked"
         	user_obj = User(user['_id'])
         	login_user(user_obj)
         	flash("Logged in successfully!", category='success')
@@ -82,7 +82,8 @@ def register_page():
                 flash("Thank you for registering!")
                 session['logged_in'] = True
                 session['username'] = username
-                return redirect(url_for("search")) # if registration was successful, 
+                login_user=username
+                return redirect(url_for('questions')) # if registration was successful, 
 
             except DuplicateKeyError: 
                 flash("Username already taken. Please choose another.")
@@ -96,6 +97,10 @@ def register_page():
 
 # OTHER
 
+@app.route('/questions' , methods=['POST', 'GET'])
+def questions():
+    return render_template('questions.html')
+
 @app.route('/')
 @app.route('/search' , methods=['POST', 'GET'])
 def search():
@@ -107,7 +112,7 @@ def search():
 
 
 @app.route('/newsfeed' , methods=['POST', 'GET'])
-@login_required # need to login to see newsfeed
+#@login_required # need to login to see newsfeed
 def newsfeed():
 	return render_template('newsfeed.html')
 

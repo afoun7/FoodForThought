@@ -14,7 +14,7 @@ from bson.son import SON
 from bson.json_util import dumps
 #from util import #log
 
-MONGO_DEFAULT_URL = 'mongodb://viral:ViralViral@ds011218.mongolab.com:11218/all_recipes'
+MONGO_DEFAULT_URL = 'mongodb://viral:ViralViral@ds011218.mlab.com:11218/all_recipes'
 MONGO_URL = os.environ.get('MONGO_URL')
 
 if MONGO_URL is None:
@@ -56,9 +56,11 @@ def get_matches(query):
                 "ratingAverage": -1
             }},
             {"$limit": 5}
+            
         ])
-    results = [doc for doc in text_results]
-    #print (results)
+    results = []
+    for doc in text_results["result"]:
+      results.append(doc)
     return results
 
 def get_random(numResults):
