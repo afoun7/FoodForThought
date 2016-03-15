@@ -80,7 +80,7 @@ def register_page():
                 collection = MongoClient()["test"]["users"] # Connect to the DB
                 collection.insert({"_id": username, "password": pass_hash})
                 flash("Thank you for registering!")
-                session['logged_in'] = True
+                session['logged_in'] = True # session allows us to store information specific to a user from one request to the next
                 session['username'] = username
                 login_user=username
                 return redirect(url_for('questions')) # if registration was successful, 
@@ -110,6 +110,12 @@ def search():
  		results = recipeQueries.get_matches(query)
 	return render_template('search.html' ,results=results)
 
+@app.route('/recipe/<recipe_id>')
+def recipe(recipe_id):
+    recipe = recipeQueries.get_recipe(recipe_id)
+    print "in food.py"
+    print recipe
+    return render_template('recipe.html', recipe=recipe)
 
 @app.route('/newsfeed' , methods=['POST', 'GET'])
 #@login_required # need to login to see newsfeed

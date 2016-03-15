@@ -19,19 +19,19 @@
         </div>
       </form>
 
-    </div><!-- /container -->
+    </div><!-- /content -->
 
       {% if results %}
               <div>
                   {% for result in results %}
                     <div><img src="{{result["photo"]["urls"][0]["url"]|string}}" style="width:75px;height:75px"></div>
-                    <h3>{{result["title"]}} </h3>
+                    <a href={{'/recipe/'~ (result._id)}}>{{result["title"]}} </h3>
                     <div>{{"Avg score: " +result["ratingAverage"]|string}}</div>
                     <div><a href="{{result["links"]["self"]["href"]|string}}">Get URL</a></div>
                     <br></br> 
                   {% endfor %}
               </div>
-              {% endif %}
+      {% endif %}
 
           <p id="input"></p>
 

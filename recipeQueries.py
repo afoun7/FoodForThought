@@ -63,6 +63,16 @@ def get_matches(query):
       results.append(doc)
     return results
 
+def get_recipe(recipe_id):
+  result = collection.find({"id": recipe_id})
+  # print(result)
+  # return result
+  results = []
+  for doc in result:
+      results.append(doc)
+      print(doc)
+  return results 
+
 def get_random(numResults):
     '''Returns a random selection of recipes. numResults specifies
     how many recipes to return'''
