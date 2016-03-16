@@ -113,8 +113,6 @@ def search():
 @app.route('/recipe/<recipe_id>')
 def recipe(recipe_id):
     recipe = recipeQueries.get_recipe(recipe_id)
-    print "in food.py"
-    print recipe
     return render_template('recipe.html', recipe=recipe)
 
 @app.route('/newsfeed' , methods=['POST', 'GET'])

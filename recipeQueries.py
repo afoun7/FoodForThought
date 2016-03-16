@@ -60,9 +60,7 @@ def get_matches(query):
     return results
 
 def get_recipe(recipe_id):
-  print ("id: %d"%int(recipe_id))
   result = collection.find_one({"_id": int(recipe_id)})
-  print(result)
   return result
   # results = []
   # for doc in result:
