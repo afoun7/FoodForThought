@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h1>Recipe page!</h1>
+<br>
+<br>
+
+<p align="center"> {{recipe.title}} </p>
+<br>
+<br>
+<h4> Ingredients: </h4>
+<ul>
+	{% for ingredient in recipe.ingredients %}
+		<li>{{ingredient.displayValue}}</li>
+	{% endfor %}
+ 
+{% endblock %}

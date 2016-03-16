@@ -14,15 +14,10 @@ from bson.son import SON
 from bson.json_util import dumps
 #from util import #log
 
-MONGO_DEFAULT_URL = 'mongodb://viral:ViralViral@ds011218.mlab.com:11218/all_recipes'
-MONGO_URL = os.environ.get('MONGO_URL')
-
-if MONGO_URL is None:
-    print("No MONGO_URL in environment. Defaulting to", MONGO_DEFAULT_URL, file=sys.stderr)
-    MONGO_URL = MONGO_DEFAULT_URL
+MONGO_URL = 'mongodb://viral:ViralViral@ds011218.mlab.com:11218/all_recipes'
 
 client = MongoClient(MONGO_URL)
-db = client.get_default_database()
+db = client.all_recipes
 collection = db['recipes']
 
 # searches in the title rank higher than matches in the body
@@ -59,19 +54,21 @@ def get_matches(query):
             
         ])
     results = []
-    for doc in text_results["result"]:
+    # for don in text_results["result"]:
+    for doc in text_results:
       results.append(doc)
     return results
 
 def get_recipe(recipe_id):
-  result = collection.find({"id": recipe_id})
-  # print(result)
-  # return result
-  results = []
-  for doc in result:
-      results.append(doc)
-      print(doc)
-  return results 
+  print ("id: %d"%int(recipe_id))
+  result = collection.find_one({"_id": int(recipe_id)})
+  print(result)
+  return result
+  # results = []
+  # for doc in result:
+  #     results.append(doc)
+  #     print(doc)
+  # return results 
 
 def get_random(numResults):
     '''Returns a random selection of recipes. numResults specifies
