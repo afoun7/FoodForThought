@@ -17,9 +17,9 @@
 // };
 
 // get the one recipe that the user selected
-// $(document).ready(function() {
-//     $("a").click(function(event) {
-//         alert(event.target.id);
-//     });
-// });
+$(document).ready(function() {
+    $("").click(function(event) {
+        alert(event.target.id);
+    });
+});
 
