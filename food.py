@@ -33,7 +33,7 @@ def login():
         	user_obj = User(user['_id'])
         	login_user(user_obj)
         	flash("Logged in successfully!", category='success')
-        	return redirect(request.args.get("next") or url_for("search")) # checks if user has permission to access next url
+        	return redirect(url_for("search")) 
         flash("Wrong username or password!", category='error') # could not find in database
     return render_template('login.html', title='login', form=form)
 
@@ -106,7 +106,7 @@ def questions():
 def search():
 	results = None
 	if request.method=='POST':
-		query = request.form['text']
+		query = request.form['search']
  		results = recipeQueries.get_matches(query)
 	return render_template('search.html' ,results=results)
 
@@ -124,6 +124,9 @@ def newsfeed():
 def welcome():
     return render_template('welcome.html')
 
+@app.route('/calendar')
+def calendar():
+    return render_template('calendar.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

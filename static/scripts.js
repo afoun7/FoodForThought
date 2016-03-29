@@ -16,10 +16,4 @@
 //     });
 // };
 
-// get the one recipe that the user selected
-$(document).ready(function() {
-    $("").click(function(event) {
-        alert(event.target.id);
-    });
-});
 

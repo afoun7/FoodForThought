@@ -2,7 +2,7 @@
 {% block body %}
 
 <!-- header/nav bar with hamburger menu -->
-<div data-role="page" id="menu-page" data-url="menu-page">
+<div data-role="page" id="menu-page" data-url="{{url_for('search')}}">
     <div data-role="header">
         <h1>Search</h1>
         <a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Menu</a> 
@@ -11,31 +11,43 @@
     <div class="ui-content">
 
       <form class="searchbox" method="POST" action="/search">
-        <div data-role="field" style="float:left">
-          <input type="text" name="text" class="searchbox-input" placeholder="Search Recipes"> 
-        </div>  
-        <div data-role="field" style="float:left">
-          <input type="submit" class="searchbox-submit" value="Search">
-        </div>
+        <input type="search" name="search" id="search-basic" value="" />
       </form>
 
-    </div><!-- /content -->
-
       {% if results %}
-              <div>
+              
                   {% for result in results %}
-                    <div><img src="{{result["photo"]["urls"][0]["url"]|string}}" style="width:75px;height:75px"></div>
-                    <a href={{'/recipe/'~ (result._id)}}>{{result["title"]}} </h3>
-                    <div>{{"Avg score: " +result["ratingAverage"]|string}}</div>
-                    <div><a href="{{result["links"]["self"]["href"]|string}}">Get URL</a></div>
-                    <br></br> 
+                  <div class = "container">
+                     <a href={{'/recipe/'~ (result._id)}} data-rel="page" data-transition="slide"></a>
+
+                     <div class = "resultsImage">
+                        <img src="{{result["photo"]["urls"][1]["url"]|string}}">
+                     </div><a href={{'/recipe/'~ (result._id)}} data-rel="page" data-transition="slide"></a>
+
+                     <div class = "resultsText">
+                        <h2>{{result["title"]}}</h2>
+                     </div><a href={{'/recipe/'~ (result._id)}} data-rel="page" data-transition="slide"></a>
+                     
+                      <div class="arrowRight">
+                        <img class="arrowRightImg" src="arrowRightIcon.png">
+                    </div>
+                  </div> <!--container--> 
+             <!--PREVIOUS -->
+                    <!--<div class= "image">
+                        <img src="{{result["photo"]["urls"][1]["url"]|string}}">
+                    </div> 
+
+                    <div class= "info">
+                      <a href={{'/recipe/'~ (result._id)}}>{{result["title"]}}</a>
+                      <p>{{"Avg score: " +result["ratingAverage"]|string}}</p> 
+                      <a href="{{result["links"]["self"]["href"]|string}}">Get URL</a></p>
+                    <div> --> 
+                   
                   {% endfor %}
-              </div>
+              
       {% endif %}
 
-          <p id="input"></p>
-
-    
+    </div><!-- /content -->
 
     <!-- hamburger menu contents -->
     <div data-role="panel" id="left-panel" class="noIcon">
