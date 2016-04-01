@@ -1,3 +1,7 @@
+* {
+text-shadow:0 0 0 transparent;
+text-shadow:none;
+}
 
 body .ui-header .ui-title {
  white-space: normal;
@@ -7,8 +11,69 @@ h1 {
   text-align:center;
 }
 
+h3 {
+  font-size:10px;
+  text-shadow: none;
+}
+
+#results {
+ position: absolute;
+ top: 100px;
+ width: 100%;
+}
+
+.container {
+  padding-bottom: 5px;
+}
+
+.plusSign {
+  float:right;
+  width: 30px;
+  height: 110px;
+  text-align: center;
+
+}
+
+
+/*.plusImg {
+width: 100%;
+position: relative;
+top:30px;
+padding-top: 5px;
+}*/
+
+.resultsText {
+  float: left;
+  text-align: left;
+  height: 130px;
+  width: 130px;
+  position: relative;
+  top: -20px;
+  right: -5px;
+  padding-top: 10px; 
+}
+
+.resultsText h3 {
+  font-size: 100%;
+  position: relative;
+  text-align: left;
+  top: 5px;
+  bottom: 20px;
+}
+
+.resultsText p {
+  font-size: 100%;
+  position: relative;
+  text-align: left;
+}
+
+.resultsImage {
+  float: left;
+  }
+
 .ui-content{
     white-space: normal;
+    text-shadow: none;
 }
 
 p {

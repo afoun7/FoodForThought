@@ -104,11 +104,11 @@ def questions():
 @app.route('/')
 @app.route('/search' , methods=['POST', 'GET'])
 def search():
-	results = None
-	if request.method=='POST':
-		query = request.form['search']
- 		results = recipeQueries.get_matches(query)
-	return render_template('search.html' ,results=results)
+    results = None
+    if request.method=='POST':
+        query = request.form['search']
+        results = recipeQueries.get_matches(query)
+    return render_template('search.html', results=results)
 
 @app.route('/recipe/<recipe_id>')
 def recipe(recipe_id):

@@ -10,28 +10,46 @@
 
     <div class="ui-content">
 
-      <form class="searchbox" method="POST" action="/search">
+      <form class="searchbox" method="POST" action={{"/search"~ query}}>
         <input type="search" name="search" id="search-basic" value="" />
       </form>
 
       {% if results %}
-              
+              <div id="results" role="content" class="ui-content">
                   {% for result in results %}
-                  <div class = "container">
-                     <a href={{'/recipe/'~ (result._id)}} data-rel="page" data-transition="slide"></a>
+                         <a href={{'/recipe/'~ (result._id)}} data-transition="slide"></a>
+                            <div class = "container">
+                               <div class = "resultsImage">
+                                  <img src="{{result["photo"]["urls"][1]["url"]|string}}">
+                               </div>
 
-                     <div class = "resultsImage">
-                        <img src="{{result["photo"]["urls"][1]["url"]|string}}">
-                     </div><a href={{'/recipe/'~ (result._id)}} data-rel="page" data-transition="slide"></a>
+                               <div class = "resultsText">
+                                  <h3><strong>{{result["title"]}}</strong></h3>
+                                  <p>{{"Avg score: " +result["ratingAverage"]|string}}</p>
+                               </div>
+                               
+                                <div class="plusSign">
+                                  <a href="#add" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all ui-icon-plus"></a>
+                                  <!-- <img class="plusImg" src="static/plusIcon.png"> -->
 
-                     <div class = "resultsText">
-                        <h2>{{result["title"]}}</h2>
-                     </div><a href={{'/recipe/'~ (result._id)}} data-rel="page" data-transition="slide"></a>
-                     
-                      <div class="arrowRight">
-                        <img class="arrowRightImg" src="arrowRightIcon.png">
-                    </div>
-                  </div> <!--container--> 
+                                  <div data-role="popup" id="add" class="ui-content" style="min-width:250px;">
+                                    <form method="post" action="demoform.asp">
+                                      <div>
+                                        <h3>Add recipe</h3>
+                                         <select name="select-choice-1" id="select-choice-1">
+                                            <option value="breakfast">Breakfast</option>
+                                            <option value="lunch">Lunch</option>
+                                            <option value="dinner">Dinner</option>
+                                         </select>
+                                        <input type="text" id="date-input" data-inline="false" data-role="date">
+                                        <input type="submit" data-inline="true" value="Add">
+                                      </div>
+                                    </form>
+                                  </div> <!--popup-->
+
+                                </div> <!--plusSign-->
+                            </div> <!--container--> 
+                          </a>
              <!--PREVIOUS -->
                     <!--<div class= "image">
                         <img src="{{result["photo"]["urls"][1]["url"]|string}}">
@@ -44,7 +62,7 @@
                     <div> --> 
                    
                   {% endfor %}
-              
+            </div> <!--results-->  
       {% endif %}
 
     </div><!-- /content -->
