@@ -128,6 +128,10 @@ def welcome():
 def calendar():
     return render_template('calendar.html')
 
+@app.route('/fullcalendar')
+def fullcalendar():
+    return render_template('fullcalendar.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
     

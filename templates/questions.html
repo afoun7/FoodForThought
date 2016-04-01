@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<!-- Start of first page -->
+<div data-role="page" id="one" data-url="/questions">
+    <div data-role="header">
+        <h1>Any dietary restrictions?</h1>
+    </div><!-- /header -->
+
+    <div role="main" class="ui-content">
+        <form>
+            <label><input type="checkbox" name="checkbox-0 ">Gluten Free</label>
+            <label><input type="checkbox" name="checkbox-0 ">Vegetarian</label>
+            <label><input type="checkbox" name="checkbox-0 ">Vegan</label>
+        </form>
+    </div><!-- /content -->
+
+<a href="#two" data-role="button" rel="external">Next</a>
+</div><!-- /page -->
+
+<!-- Start of second page -->
+<div data-role="page" id="two" >
+    <div data-role="header">
+        <h1>Zipcode?</h1>
+    </div><!-- /header -->
+
+    <div role="main" class="ui-content">
+        <form>
+            <input type="text" name="name" id="basic" value=""  />
+        </form>
+    </div><!-- /content -->
+
+<a href="#three" data-role="button">Next</a>
+</div><!-- /page -->
+
+<!-- Start of third page -->
+<div data-role="page" id="three">
+    <div data-role="header">
+        <h1>How much time do you usually have to cook?</h1>
+    </div><!-- /header -->
+
+    <div role="main" class="ui-content">
+        <form>
+            <label><input type="radio" name="radio-choice-0" id="radio-choice-0a">Less than 30 minutes per meal</label>
+            <label><input type="radio" name="radio-choice-0" id="radio-choice-0a">1 hour per meal</label>
+            <label><input type="radio" name="radio-choice-0" id="radio-choice-0a">1.5 hours per meal</label>
+            <label><input type="radio" name="radio-choice-0" id="radio-choice-0a">2 hours per meal</label>
+        </form>
+    </div><!-- /content -->
+
+<a href="#four" data-role="button">Next</a>
+</div><!-- /page -->
+
+<!-- Start of fourth page -->
+<div data-role="page" id="four">
+    <div data-role="header">
+        <h1>Which meals are you interested in cooking?</h1>
+    </div><!-- /header -->
+
+    <div role="main" class="ui-content">
+        <form>
+            <label><input type="checkbox" name="checkbox-0 ">Breakfast</label>
+            <label><input type="checkbox" name="checkbox-0 ">Lunch</label>
+            <label><input type="checkbox" name="checkbox-0 ">Dinner</label>
+        </form>
+    </div><!-- /content -->
+
+<a href="/newsfeed" data-role="button">Done</a>
+</div><!-- /page -->
+
+{% endblock %}
