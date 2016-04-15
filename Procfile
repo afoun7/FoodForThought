@@ -1,1 +1,1 @@
-web: python food.py
+web: gunicorn gettingstarted.wsgi --log-file -
