@@ -77,7 +77,7 @@ def register_page():
             pass_hash = generate_password_hash(form.password.data, method='pbkdf2:sha256') # hash the user's pw
 
             try:
-                collection = MongoClient()["test"]["users"] # Connect to the DB
+                collection = MongoClient('mongodb://viral:ViralViral@ds011271.mlab.com:11271/recipes_users')["users"] # Connect to the DB
                 collection.insert({"_id": username, "password": pass_hash})
                 flash("Thank you for registering!")
                 session['logged_in'] = True # session allows us to store information specific to a user from one request to the next
