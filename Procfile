@@ -1,1 +1,1 @@
-
+web: gunicorn food:app
