@@ -54,7 +54,7 @@ def get_matches(query):
             
         ])
     results = []
-    for doc in text_results["result"]:
+    for doc in text_results:
     # for doc in text_results:
       results.append(doc)
     return results
