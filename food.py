@@ -29,6 +29,7 @@ def login():
     form = LoginForm()
     if request.method == 'POST' and form.validate_on_submit():
         user = app.config['USERS_COLLECTION'].find_one({"_id": form.username.data})
+        print (user)
         if user and User.validate_login(user['password'], form.password.data): # ensure that user exists
         	user_obj = User(user['_id'])
         	login_user(user_obj)
@@ -77,12 +78,16 @@ def register_page():
             pass_hash = generate_password_hash(form.password.data, method='pbkdf2:sha256') # hash the user's pw
 
             try:
-                collection = MongoClient('mongodb://viral:ViralViral@ds011271.mlab.com:11271/recipes_users')["users"] # Connect to the DB
+                print ("in try")
+                collection = app.config['USERS_COLLECTION'] # Connect to the DB
+                print (collection)
                 collection.insert({"_id": username, "password": pass_hash})
+                print ("after insert")
                 flash("Thank you for registering!")
                 session['logged_in'] = True # session allows us to store information specific to a user from one request to the next
                 session['username'] = username
                 login_user=username
+                print (login_user)
                 return redirect(url_for('questions')) # if registration was successful, 
 
             except DuplicateKeyError: 
