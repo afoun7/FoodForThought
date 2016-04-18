@@ -17,7 +17,7 @@ import operator
 import json
 
 app = Flask(__name__) # create instance of Flask class
-# app.config.from_object(__name__)
+#app.config.from_object(__name__)
 app.config.from_object('config')
 login_manager = LoginManager()
 login_manager.init_app(app)
