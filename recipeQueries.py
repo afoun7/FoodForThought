@@ -56,7 +56,10 @@ def get_matches(query):
             
         ])
     results = []
-    for doc in text_results:
+    returned_docs = text_results
+    if "result" in text_results:
+      returned_docs = text_results["result"]
+    for doc in returned_docs:
     # for doc in text_results:
       results.append(doc)
     return results

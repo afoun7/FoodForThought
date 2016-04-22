@@ -8,10 +8,25 @@
     </div><!-- /header -->
 
     <div role="main" class="ui-content">
-        <form>
-            <label><input type="checkbox" name="checkbox-0 ">Gluten Free</label>
-            <label><input type="checkbox" name="checkbox-0 ">Vegetarian</label>
-            <label><input type="checkbox" name="checkbox-0 ">Vegan</label>
+        <form id="restrictions">
+            <label><input type="checkbox" name="option" class="option">Gluten Free</label>
+            <label><input type="checkbox" name="option" class="option">Vegetarian</label>
+            <label><input type="checkbox" name="option" class="option">Vegan</label>
+            <label for="has_allergies"><input type="checkbox" name="option" class="option" value="has_allergies" id="has_allergies">Allergies</label>
+                
+                <div id="allergiesDiv" style="display:none">
+                    <form id="allergiesForm">
+                        <label><input type="checkbox" name="allergens" class="allergens">Peanuts</label>
+                        <label><input type="checkbox" name="allergens" class="allergens">Tree Nuts</label>
+                        <label><input type="checkbox" name="allergens" class="allergens">Milk</label>
+                        <label><input type="checkbox" name="allergens" class="allergens">Egg</label>
+                        <label><input type="checkbox" name="allergens" class="allergens">Soy</label>
+                        <label><input type="checkbox" name="allergens" class="allergens">Fish</label>
+                        <label><input type="checkbox" name="allergens" class="allergens">Shell Fish</label>
+                        <label for="other"><input type="checkbox" name="allergens" class="allergens" id="other" value="other">Other</label>
+                        <input id="other-text" placeholder="please enter allergies" type='text' style="display:none"/>
+                    </form>
+                </div>
         </form>
     </div><!-- /content -->
 
@@ -65,7 +80,7 @@
         </form>
     </div><!-- /content -->
 
-<a href="/welcome" data-role="button">Done</a>
+<a href="/search" data-role="button">Done</a>
 </div><!-- /page -->
 
 {% endblock %}
