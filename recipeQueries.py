@@ -18,12 +18,14 @@ MONGO_URL = 'mongodb://viral:ViralViral@ds011218.mlab.com:11218/all_recipes'
 
 client = MongoClient(MONGO_URL)
 db = client.all_recipes
-collection = db['recipes']
+recipes_collection = db['recipes']
+ingredients_collection = db['ingredients']
 
 # searches in the title rank higher than matches in the body
 # so we handle this by setting weights on the fields below
 
-collection.ensure_index([
+#recipes_collection.ensure_index([
+ingredients_collection.ensure_index([
       ('title', 'text')
   ],
   name="search_index",
@@ -39,12 +41,12 @@ def get_matches(query):
     matching results from the mongodb database'''
    # query = request.form['q']
 
-   #  text_results = collection.find({"$text": {"$search": query}})
+   #  text_results = recipes_collection.find({"$text": {"$search": query}})
    #  results = [doc["title"] for doc in text_results]
    #  print results
    #  return results
 
-    text_results = collection.aggregate(
+    text_results = recipes_collection.aggregate(
         [
             {"$match": {"$text": {"$search": query}}},
             {"$sort": {
@@ -60,19 +62,14 @@ def get_matches(query):
     return results
 
 def get_recipe(recipe_id):
-  result = collection.find_one({"_id": int(recipe_id)})
+  result = recipes_collection.find_one({"_id": int(recipe_id)})
   return result
-  # results = []
-  # for doc in result:
-  #     results.append(doc)
-  #     print(doc)
-  # return results 
 
 def get_random(numResults):
     '''Returns a random selection of recipes. numResults specifies
     how many recipes to return'''
-    #random_results = collection.find().limit(numResults).skip(10)
-    random_results = collection.findOne()
+    #random_results = recipes_collection.find().limit(numResults).skip(10)
+    random_results = recipes_collection.findOne()
     results = [doc for doc in random_results]
     #print (results)
     return results    

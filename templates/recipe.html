@@ -28,18 +28,18 @@
         <ul data-role="listview">
                 <li><a href="{{url_for('search')}}">Home</a></li>
                 <li><a href="{{url_for('calendar')}}">Calendar</a></li>
-                <li><a href="#panel-responsive-page2">Coupons</a></li>
-                <li><a href="#panel-responsive-page2">Swipe</a></li>
-                <li><a href="#panel-responsive-page2">Shopping List</a></li>
-                <li><a href="#panel-responsive-page2">Preferences</a></li>
-                <li><a href="#panel-responsive-page2">Help</a></li>
+                <li><a href="{{url_for('coupons')}}">Coupons</a></li>
+                <li><a href="{{url_for('swipe')}}">Swipe</a></li>
+                <li><a href="{{url_for('list')}}">Shopping List</a></li>
+                <li><a href="{{url_for('preferences')}}">Preferences</a></li>
+                <li><a href="{{url_for('help')}}">Help</a></li>
         </ul>
     </div><!-- /panel -->
 </div><!-- Summary page -->
 
 
 <!-- Ingredients page -->
-<div data-role="page" id="ingredients" >
+<div data-role="page" id="ingredients" data-url="/recipe/{{recipe.recipeID}}">
     <div data-role="header">
         <h1>{{recipe.title}}</h1>
         <a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Menu</a> 
@@ -65,20 +65,20 @@
     <div data-role="panel" id="left-panel" class="noIcon">
       <img src="static/apple.png" id="logo">
         <ul data-role="listview">
-                <li><a href="{{url_for('search')}}">Home</a></li>
+                 <li><a href="{{url_for('search')}}">Home</a></li>
                 <li><a href="{{url_for('calendar')}}">Calendar</a></li>
-                <li><a href="#panel-responsive-page2">Coupons</a></li>
-                <li><a href="#panel-responsive-page2">Swipe</a></li>
-                <li><a href="#panel-responsive-page2">Shopping List</a></li>
-                <li><a href="#panel-responsive-page2">Preferences</a></li>
-                <li><a href="#panel-responsive-page2">Help</a></li>
+                <li><a href="{{url_for('coupons')}}">Coupons</a></li>
+                <li><a href="{{url_for('swipe')}}">Swipe</a></li>
+                <li><a href="{{url_for('list')}}">Shopping List</a></li>
+                <li><a href="{{url_for('preferences')}}">Preferences</a></li>
+                <li><a href="{{url_for('help')}}">Help</a></li>
         </ul>
     </div><!-- /panel -->
 </div><!-- Ingredients page -->
 
 
 <!-- Steps page -->
-<div data-role="page" id="steps">
+<div data-role="page" id="steps" data-url="/recipe/{{recipe.recipeID}}">
     <div data-role="header">
         <h1>{{recipe.title}}</h1>
         <a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Menu</a> 
@@ -101,15 +101,15 @@
 
     <!-- hamburger menu contents -->
     <div data-role="panel" id="left-panel" class="noIcon">
-      <img src="static/apple.png" id="logo">
+      <!-- <img src="static/apple.png" id="logo"> -->
         <ul data-role="listview">
-                <li><a href="{{url_for('search')}}">Home</a></li>
+                 <li><a href="{{url_for('search')}}">Home</a></li>
                 <li><a href="{{url_for('calendar')}}">Calendar</a></li>
-                <li><a href="#panel-responsive-page2">Coupons</a></li>
-                <li><a href="#panel-responsive-page2">Swipe</a></li>
-                <li><a href="#panel-responsive-page2">Shopping List</a></li>
-                <li><a href="#panel-responsive-page2">Preferences</a></li>
-                <li><a href="#panel-responsive-page2">Help</a></li>
+                <li><a href="{{url_for('coupons')}}">Coupons</a></li>
+                <li><a href="{{url_for('swipe')}}">Swipe</a></li>
+                <li><a href="{{url_for('list')}}">Shopping List</a></li>
+                <li><a href="{{url_for('preferences')}}">Preferences</a></li>
+                <li><a href="{{url_for('help')}}">Help</a></li>
         </ul>
     </div><!-- /panel -->
 

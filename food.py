@@ -28,7 +28,7 @@ login_manager.init_app(app)
 def login():
     form = LoginForm()
     if request.method == 'POST' and form.validate_on_submit():
-        user = app.config['USERS_COLLECTION'].find_one({"_id": form.username.data})
+        user = app.config['USERS_collection'].find_one({"_id": form.username.data})
         if user and User.validate_login(user['password'], form.password.data): # ensure that user exists
         	user_obj = User(user['_id'])
         	login_user(user_obj)
@@ -47,7 +47,7 @@ def logout():
 @login_manager.user_loader # user_loader callback is used to reload the user object from the user ID stored in the session
 def load_user(username): 
 	'''takes in the user ID and returns the corresponding user object'''
-	u = app.config['USERS_COLLECTION'].find_one({"_id": username})
+	u = app.config['USERS_collection'].find_one({"_id": username})
 	if not u:
 		return None
 	return User(u['_id'])
@@ -124,13 +124,31 @@ def newsfeed():
 def welcome():
     return render_template('welcome.html')
 
+@app.route('/coupons')
+def coupons():
+    return render_template('coupons.html')
+
 @app.route('/calendar')
 def calendar():
     return render_template('calendar.html')
 
-@app.route('/fullcalendar')
-def fullcalendar():
-    return render_template('fullcalendar.html')
+@app.route('/help')
+def help():
+    return render_template('help.html')
+
+@app.route('/preferences')
+def preferences():
+    return render_template('preferences.html')
+
+@app.route('/swipe')
+def swipe():
+    return render_template('swipe.html')
+
+@app.route('/list')
+def list():
+    return render_template('list.html')
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
