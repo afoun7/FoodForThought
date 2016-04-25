@@ -45,7 +45,6 @@ def get_matches(query):
    #  results = [doc["title"] for doc in text_results]
    #  print results
    #  return results
-
     text_results = recipes_collection.aggregate(
         [
             {"$match": {"$text": {"$search": query}}},
@@ -57,8 +56,13 @@ def get_matches(query):
         ])
     results = []
     returned_docs = text_results
-    if "result" in text_results:
-      returned_docs = text_results["result"]
+
+    # Amanda commented the following two lines. It was not
+    # yielding any search results when these two lines were included.
+    # Unsure why this is.
+   # if ("result") in text_results:
+    #  returned_docs = text_results["result"]
+
     for doc in returned_docs:
     # for doc in text_results:
       results.append(doc)
