@@ -28,21 +28,22 @@
                                   <p>{{"Avg score: " +result["ratingAverage"]|string}}</p>
                                </div>
                                
-                                <div class="plusSign">
+                             <div class="plusSign">
                                   <a href="#add" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all ui-icon-plus"></a>
                                   <!-- <img class="plusImg" src="static/plusIcon.png"> -->
 
                                   <div data-role="popup" id="add" class="ui-content" style="min-width:250px;">
-                                    <form method="post" action="demoform.asp">
+                                    <form method="post" action="javascript:doSubmit();">
                                       <div>
                                         <h3>Add recipe</h3>
-                                         <select name="select-choice-1" id="select-choice-1">
+                                        <input type="hidden" id=recipeName value={{result["title"]}} />
+                                         <select name="meal" id="meal">
                                             <option value="breakfast">Breakfast</option>
                                             <option value="lunch">Lunch</option>
                                             <option value="dinner">Dinner</option>
                                          </select>
-                                        <input type="text" id="date-input" data-inline="false" data-role="date">
-                                        <input type="submit" data-inline="true" value="Add">
+                                        <input type="date" id="date">
+                                        <input type="submit" data-inline="true">
                                       </div>
                                     </form>
                                   </div> <!--popup-->
