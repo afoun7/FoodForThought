@@ -1,86 +1,30 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<!-- Start of first page -->
-<div data-role="page" id="one" data-url="/questions">
-    <div data-role="header">
-        <h1>Any dietary restrictions?</h1>
-    </div><!-- /header -->
+<!-- static navbar at the top --> 
+<div data-role="header">
+  <h1>Questionnaire</h1>
+</div>
 
-    <div role="main" class="ui-content">
-        <form id="restrictions">
-            <label><input type="checkbox" name="option" class="option">Gluten Free</label>
-            <label><input type="checkbox" name="option" class="option">Vegetarian</label>
-            <label><input type="checkbox" name="option" class="option">Vegan</label>
-            <label for="has_allergies"><input type="checkbox" name="option" class="option" value="has_allergies" id="has_allergies">Allergies</label>
-                
-                <div id="allergiesDiv" style="display:none">
-                    <form id="allergiesForm">
-                        <label><input type="checkbox" name="allergens" class="allergens">Peanuts</label>
-                        <label><input type="checkbox" name="allergens" class="allergens">Tree Nuts</label>
-                        <label><input type="checkbox" name="allergens" class="allergens">Milk</label>
-                        <label><input type="checkbox" name="allergens" class="allergens">Egg</label>
-                        <label><input type="checkbox" name="allergens" class="allergens">Soy</label>
-                        <label><input type="checkbox" name="allergens" class="allergens">Fish</label>
-                        <label><input type="checkbox" name="allergens" class="allergens">Shell Fish</label>
-                        <label for="other"><input type="checkbox" name="allergens" class="allergens" id="other" value="other">Other</label>
-                        <input id="other-text" placeholder="please enter allergies" type='text' style="display:none"/>
-                    </form>
-                </div>
+    <div class = "ui-content">
+        <br> 
+        {% from "_formhelpers.html" import render_field %}
+        
+        <form method=post action="/questions">
+            <dl> <!-- description list renders items from class RegistrationForm -->
+                {{render_field(form.restrictions)}} 
+                {{render_field(form.allergies)}}
+                {{render_field(form.zipcode)}}
+                {{render_field(form.time)}}
+                {{render_field(form.meal)}}
+            </dl>
+            <p><input type=submit value=Submit></p> <!-- submission -->
         </form>
-    </div><!-- /content -->
+        
+        {% if error %} <!-- if error variable is not empty -->
+            <p class="error"><strong>Error:</strong>{{error}}</p> <!-- print out error -->
+        {% endif %}
 
-<a href="#two" data-role="button" rel="external">Next</a>
-</div><!-- /page -->
-
-<!-- Start of second page -->
-<div data-role="page" id="two" >
-    <div data-role="header">
-        <h1>Zipcode?</h1>
-    </div><!-- /header -->
-
-    <div role="main" class="ui-content">
-        <form>
-            <input type="text" name="name" id="basic" value=""  />
-        </form>
-    </div><!-- /content -->
-
-<a href="#three" data-role="button">Next</a>
-</div><!-- /page -->
-
-<!-- Start of third page -->
-<div data-role="page" id="three">
-    <div data-role="header">
-        <h1>How much time do you usually have to cook?</h1>
-    </div><!-- /header -->
-
-    <div role="main" class="ui-content">
-        <form>
-            <label><input type="radio" name="radio-choice-0" id="radio-choice-0a">Less than 30 minutes per meal</label>
-            <label><input type="radio" name="radio-choice-0" id="radio-choice-0a">1 hour per meal</label>
-            <label><input type="radio" name="radio-choice-0" id="radio-choice-0a">1.5 hours per meal</label>
-            <label><input type="radio" name="radio-choice-0" id="radio-choice-0a">2 hours per meal</label>
-        </form>
-    </div><!-- /content -->
-
-<a href="#four" data-role="button">Next</a>
-</div><!-- /page -->
-
-<!-- Start of fourth page -->
-<div data-role="page" id="four">
-    <div data-role="header">
-        <h1>Which meals are you interested in cooking?</h1>
-    </div><!-- /header -->
-
-    <div role="main" class="ui-content">
-        <form>
-            <label><input type="checkbox" name="checkbox-0 ">Breakfast</label>
-            <label><input type="checkbox" name="checkbox-0 ">Lunch</label>
-            <label><input type="checkbox" name="checkbox-0 ">Dinner</label>
-        </form>
-    </div><!-- /content -->
-
-<a href="/search" data-role="button">Done</a>
-</div><!-- /page -->
-
+    </div>
 {% endblock %}
+

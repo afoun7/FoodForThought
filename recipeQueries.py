@@ -72,11 +72,3 @@ def get_recipe(recipe_id):
   result = recipes_collection.find_one({"_id": int(recipe_id)})
   return result
 
-def get_random(numResults):
-    '''Returns a random selection of recipes. numResults specifies
-    how many recipes to return'''
-    #random_results = recipes_collection.find().limit(numResults).skip(10)
-    random_results = recipes_collection.findOne()
-    results = [doc for doc in random_results]
-    #print (results)
-    return results    

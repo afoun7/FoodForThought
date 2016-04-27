@@ -4,9 +4,9 @@ from flask import Flask, render_template, request, jsonify, redirect, flash, ses
 from flask.ext.login import LoginManager, UserMixin, login_required, login_user, logout_user, url_for
 from forms import LoginForm  
 from user import User
-from flask.ext.wtf import Form 
+from flask.ext.wtf import Form
 from functools import wraps 
-from wtforms import StringField, PasswordField, Form, BooleanField, TextField, validators
+from wtforms import StringField, PasswordField, Form, BooleanField, RadioField, TextField, validators, widgets,SelectMultipleField
 from wtforms.validators import DataRequired
 from werkzeug.security import generate_password_hash
 from pymongo.errors import DuplicateKeyError
@@ -22,6 +22,7 @@ app.config.from_object('config')
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+curr_user = ""
 
 # LOGIN 
 @app.route('/login', methods=['GET', 'POST'])
@@ -31,6 +32,7 @@ def login():
 
         user = app.config['USERS_COLLECTION'].find_one({"_id": form.username.data})
         print (user)
+        curr_user = user
 
         if user and User.validate_login(user['password'], form.password.data): # ensure that user exists
         	user_obj = User(user['_id'])
@@ -50,14 +52,17 @@ def logout():
 @login_manager.user_loader # user_loader callback is used to reload the user object from the user ID stored in the session
 def load_user(username): 
 	'''takes in the user ID and returns the corresponding user object'''
-	u = app.config['USERS_collection'].find_one({"_id": username})
+	u = app.config['USERS_COLLECTION'].find_one({"_id": username})
 	if not u:
 		return None
 	return User(u['_id'])
 
-# SIGN UP/REGISTRATION
+# Sign up/Registration
+# After registering with a username, email, and password, users are redirected to the 
+# sign up questionnaire
 
 # This is the actual form that we want to connect to our webpage
+
 class RegistrationForm(Form):
     username = TextField('Username', [validators.Length(min=4, max=20)])
     email = TextField('Email Address', [validators.Length(min=6, max=50)])
@@ -101,13 +106,57 @@ def register_page():
     except Exception as e:
         return(str(e))
 
+# Sign up questionnaire
 
-# OTHER
+class MultiCheckboxField(SelectMultipleField):
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()
+
+class QuestionsForm(Form):
+    string_restrictions = ['Gluten-Free\r\nVegan\r\nVegetarian\r\n']
+    list_restrictions = string_restrictions[0].split()
+    files_restrictions = [(x, x) for x in list_restrictions]
+    restrictions = MultiCheckboxField('Restrictions', choices=files_restrictions)
+
+    string_allergies = ['Peanuts\r\nTree-nuts\r\nMilk\r\nEgg\r\nSoy\r\nFish\r\nShell-Fish\r\n']
+    list_allergies = string_allergies[0].split()
+    files_allergies = [(x, x) for x in list_allergies]
+    allergies = MultiCheckboxField('Allergies', choices=files_allergies)
+
+    zipcode = TextField('Zipcode',[validators.Length(min=5, max=5)])
+    time = RadioField('How much time do you usually have to cook per meal?', choices=[('option1','Less than 30 minutes'),('option2','1 hour'),('option3','1.5 hours'),('option4','2 hours')])
+    meal = RadioField('Which meals are you interested in cooking?', choices=[('option1','Breakfast'),('option2','Lunch'),('option3','Dinner')])
+
 
 @app.route('/questions' , methods=['POST', 'GET'])
 def questions():
-    return render_template('questions.html')
+    try:
+        form = QuestionsForm(request.form) # allows us to render the form
 
+        if request.method == "POST" and form.validate(): # if user hit submit button and form is complete
+            print ("submitted form")
+            restrictions = form.restrictions.data 
+            allergies = form.allergies.data
+            zipcode = form.zipcode.data
+            time = form.time.data
+            meal = form.meal.data
+
+            try:
+                #username = {{current_user.name }}
+                collection = app.config['USERS_COLLECTION'] # Connect to the DB
+                collection.update({"_id":curr_user},{"restrictions": restrictions, "allergies": allergies, "zipcode": zipcode, "time": time, "meal": meal})
+                flash("Thank you!")
+                return redirect(url_for('search')) # if registration was successful, 
+
+            except Exception as e: 
+                return(str(e))
+        
+        return render_template('questions.html', form=form)
+    
+    except Exception as e:
+        return(str(e))
+
+# OTHER
 @app.route('/')
 @app.route('/search' , methods=['POST', 'GET'])
 def search():
@@ -152,8 +201,9 @@ def swipe():
     return render_template('swipe.html')
 
 @app.route('/list')
-def list():
-    return render_template('list.html')
+def list(recipe_id):
+    recipe = recipeQueries.get_recipe(recipe_id)
+    return render_template('list.html',recipe=recipe)
 
 
 

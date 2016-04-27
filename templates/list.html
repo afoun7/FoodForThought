@@ -12,6 +12,21 @@
 
     <h1>Shopping List Page</h1>
 
+        {% for ingredient in recipe.ingredients %}
+            <a href={{'/recipe/'~ (result._id)}} data-transition="slide">
+                <div class = "container">
+                    {% for ing in ingredients_cursor %}
+                    <div class = "ingredientImage">
+                        <img src="{{ing["image"]|string}}">
+                    </div>
+                    <div class ="ingredientText">
+                        <h3>{{ingredient["displayValue"]}}</h3>
+                     {% endfor %}
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+
     </div><!-- /content -->
 
     <!-- hamburger menu contents -->
