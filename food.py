@@ -160,9 +160,9 @@ def questions():
 @app.route('/search' , methods=['POST', 'GET'])
 def search():
     # example of accessing current user data in python side
-    if not current_user.is_anonymous():
-        print (current_user.username)
-        print (current_user.allergies + current_user.restrictions)
+    # if not current_user.is_anonymous():
+    #     print (current_user.username)
+    #     print (current_user.allergies + current_user.restrictions)
     results = None
     if request.method=='POST':
         query = request.form['search']
