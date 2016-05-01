@@ -1,7 +1,7 @@
 # Amanda Foun
 
 from flask import Flask, render_template, request, jsonify, redirect, flash, session, g
-from flask.ext.login import LoginManager, UserMixin, login_required, login_user, logout_user, url_for
+from flask.ext.login import current_user, LoginManager, UserMixin, login_required, login_user, logout_user, url_for 
 from forms import LoginForm  
 from user import User
 from flask.ext.wtf import Form
@@ -30,16 +30,18 @@ def login():
     form = LoginForm()
     if request.method == 'POST' and form.validate_on_submit():
 
-        user = app.config['USERS_COLLECTION'].find_one({"_id": form.username.data})
+        #user = app.config['USERS_COLLECTION'].find_one({"_id": form.username.data})
+        user = User(form.username.data)
         print (user)
         curr_user = user
 
-        if user and User.validate_login(user['password'], form.password.data): # ensure that user exists
-        	user_obj = User(user['_id'])
-        	login_user(user_obj)
+        if user and User.validate_login(user.password, form.password.data): # ensure that user exists
+        	# user_obj = User(user['_id'])
+        	login_user(user)
         	flash("Logged in successfully!", category='success')
-        	return redirect(url_for("search")) 
-        flash("Wrong username or password!", category='error') # could not find in database
+        	return redirect(url_for("search"))
+        else:  
+            flash("Wrong username or password!", category='error') # could not find in database
     return render_template('login.html', title='login', form=form)
 
 
@@ -51,11 +53,12 @@ def logout():
 
 @login_manager.user_loader # user_loader callback is used to reload the user object from the user ID stored in the session
 def load_user(username): 
-	'''takes in the user ID and returns the corresponding user object'''
-	u = app.config['USERS_COLLECTION'].find_one({"_id": username})
-	if not u:
-		return None
-	return User(u['_id'])
+    user = User()
+    return user.get(username)
+	# u = app.config['USERS_COLLECTION'].find_one({"_id": username})
+	# if not u:
+	# 	return None
+	# return User(u)
 
 # Sign up/Registration
 # After registering with a username, email, and password, users are redirected to the 
@@ -93,8 +96,8 @@ def register_page():
                 flash("Thank you for registering!")
                 session['logged_in'] = True # session allows us to store information specific to a user from one request to the next
                 session['username'] = username
-                login_user=username
-                print (login_user)
+                # login_user=username
+                # print (login_user)
                 return redirect(url_for('questions')) # if registration was successful, 
 
             except DuplicateKeyError: 
@@ -160,6 +163,8 @@ def questions():
 @app.route('/')
 @app.route('/search' , methods=['POST', 'GET'])
 def search():
+    if not current_user.is_anonymous():
+        print (current_user.username)
     results = None
     if request.method=='POST':
         query = request.form['search']

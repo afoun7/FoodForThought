@@ -13,6 +13,11 @@
       <form class="searchbox" method="POST" action={{"/search"}}>
         <input type="search" name="search" id="search-basic" value="" />
       </form>
+      <div>
+        {% if current_user.is_authenticated and not (current_user.is_anonymous()) %}
+          Hi {{ current_user.username }} Search for food you'd like to cook!
+        {% endif %}
+      </div>
 
       {% if results %}
               <div id="results" role="content" class="ui-content">
