@@ -31,13 +31,12 @@ def login():
     if request.method == 'POST' and form.validate_on_submit():
 
         #user = app.config['USERS_COLLECTION'].find_one({"_id": form.username.data})
-        user = User(form.username.data)
-        print (user)
-        curr_user = user
+        user = User()
+        curr_user  = user.get(form.username.data)
 
-        if user and User.validate_login(user.password, form.password.data): # ensure that user exists
+        if curr_user and User.validate_login(curr_user.password, form.password.data): # ensure that user exists
         	# user_obj = User(user['_id'])
-        	login_user(user)
+        	login_user(curr_user)
         	flash("Logged in successfully!", category='success')
         	return redirect(url_for("search"))
         else:  
@@ -79,28 +78,28 @@ class RegistrationForm(Form):
 
 @app.route('/register', methods=['GET', 'POST'])
 def register_page():
+    print ("in register_page")
     try:
         form = RegistrationForm(request.form) # allows us to render the form
 
         if request.method == "POST" and form.validate(): # if user hit register button and form is complete
+            # logout any logged in user
+            logout_user()
             username = form.username.data # refers to username from RegistrationForm class
             email = form.email.data
             pass_hash = generate_password_hash(form.password.data, method='pbkdf2:sha256') # hash the user's pw
 
-            try:
-                print ("in try")
-                collection = app.config['USERS_COLLECTION'] # Connect to the DB
-                print (collection)
-                collection.insert({"_id": username, "password": pass_hash})
-                print ("after insert")
-                flash("Thank you for registering!")
-                session['logged_in'] = True # session allows us to store information specific to a user from one request to the next
-                session['username'] = username
-                # login_user=username
-                # print (login_user)
-                return redirect(url_for('questions')) # if registration was successful, 
+            # prepare User
+            user = User(username,email,pass_hash)
 
-            except DuplicateKeyError: 
+            if user.save():
+                if login_user(user, remember="no"):
+                    flash("Thank you for registering! Logged in!")
+                    return redirect(url_for('questions'))
+                else:
+                    flash("unable to log you in")
+
+            else:
                 flash("Username already taken. Please choose another.")
                 return render_template('register.html', form=form)
         
@@ -137,7 +136,6 @@ def questions():
         form = QuestionsForm(request.form) # allows us to render the form
 
         if request.method == "POST" and form.validate(): # if user hit submit button and form is complete
-            print ("submitted form")
             restrictions = form.restrictions.data 
             allergies = form.allergies.data
             zipcode = form.zipcode.data
@@ -145,9 +143,7 @@ def questions():
             meal = form.meal.data
 
             try:
-                #username = {{current_user.name }}
-                collection = app.config['USERS_COLLECTION'] # Connect to the DB
-                collection.update({"_id":curr_user},{"restrictions": restrictions, "allergies": allergies, "zipcode": zipcode, "time": time, "meal": meal})
+                current_user.update({"restrictions": restrictions, "allergies": allergies, "zipcode": zipcode, "time": time, "meal": meal})
                 flash("Thank you!")
                 return redirect(url_for('search')) # if registration was successful, 
 
@@ -163,8 +159,10 @@ def questions():
 @app.route('/')
 @app.route('/search' , methods=['POST', 'GET'])
 def search():
+    # example of accessing current user data in python side
     if not current_user.is_anonymous():
         print (current_user.username)
+        print (current_user.allergies + current_user.restrictions)
     results = None
     if request.method=='POST':
         query = request.form['search']

@@ -10,16 +10,18 @@ users_collection = users_db.users
 
 class User():
 
-    # def __init__(self, id):
-    #     self.username = id
-
-    def __init__(self, email=None, password=None, active=True, id=None):
+    def __init__(self, username=None, email=None, password=None, active=True, id=None):
+        self.username = username
         self.email = email
         self.password = password
         self.active = active
         self.isAdmin = False
         self.id = None
         self.allergies = None
+        self.restrictions = None
+        self.zipcode = None
+        self.time = None
+        self.meal = None
 
     def is_authenticated(self): # if provide valid credentials
         return True
@@ -38,10 +40,38 @@ class User():
         if user:
             self.username = user['_id']
             self.password = user['password']
-            #self.email = user['email']
+            self.email = user['email']
+            self.updateObject(user)
             return self
         else:
             return None
+
+    def update(self, update_dict):
+        # add data to the database
+        users_collection.update({"_id":self.username},{"$set": update_dict})
+        self.updateObject(update_dict)
+
+
+    def updateObject(self, update_dict):
+        # save data to this object
+        if "allergies" in update_dict:
+            self.allergies = update_dict["allergies"]
+        if "restrictions" in update_dict:
+            self.restrictions = update_dict["restrictions"]
+        if "zipcode" in update_dict:
+            self.zipcode = update_dict["zipcode"]
+        if "time" in update_dict:
+            self.time = update_dict["time"]
+        if "meal" in update_dict:
+            self.meal = update_dict["meal"]
+
+
+    def save(self):
+        try:
+            users_collection.insert({"_id": self.username, "password": self.password, "email":self.email})
+            return True
+        except:
+            return False
 
 
     # def validate_login(self, password):

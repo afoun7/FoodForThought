@@ -16,6 +16,12 @@
       <div>
         {% if current_user.is_authenticated and not (current_user.is_anonymous()) %}
           Hi {{ current_user.username }} Search for food you'd like to cook!
+          <div>
+            Allergies: {{ current_user.allergies }} <br/>
+            Restrictions: {{ current_user.restrictions }} <br/>
+            Zipcode: {{ current_user.zipcode }} <br/>
+            Time: {{ current_user.time }} <br/>
+          <div>
         {% endif %}
       </div>
 
