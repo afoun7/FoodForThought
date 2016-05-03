@@ -22,6 +22,7 @@ class User():
         self.zipcode = None
         self.time = None
         self.meal = None
+        self.calendar = {}
 
     def is_authenticated(self): # if provide valid credentials
         return True
@@ -73,6 +74,12 @@ class User():
         except:
             return False
 
+    def addToCalendar(self, date, recipe):
+        # values are list of recipe ids
+        if date not in self.calendar:
+            self.calendar[date] = []
+        self.calendar[date].push(recipe)
+
 
     # def validate_login(self, password):
     #     return check_password_hash(self.password, password)
@@ -80,3 +87,4 @@ class User():
     @staticmethod
     def validate_login(password_hash, password):
         return check_password_hash(password_hash, password)
+

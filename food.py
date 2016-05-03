@@ -43,12 +43,10 @@ def login():
             flash("Wrong username or password!", category='error') # could not find in database
     return render_template('login.html', title='login', form=form)
 
-
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('login')) # go back to login page
-
 
 @login_manager.user_loader # user_loader callback is used to reload the user object from the user ID stored in the session
 def load_user(username): 

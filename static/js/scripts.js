@@ -16,44 +16,36 @@ $(document).ready(function() {
     doSubmit();
   });
 
+    // on the search page, users can add recipes to their calendar
     window.doSubmit = function() {
-         $("#add").popup('close');
+        $("#add").popup('close');
         console.log($('#meal').val());
-        console.log($('#date').val());
+        console.log($('#date').val()); // date that user enters 
   
-        var d = new Date($('#date').val());
+        // need to add a time to each date object
+        var newdate = new Date($('#date').val());
         if (($('#meal').val()) == "breakfast") {
-            d.setHours(7);
+            newdate.setHours(7); // automatically set the time of event to 7AM
+        } else if (($('#meal').val()) == "lunch") {
+            newdate.setHours(12); // automatically set the time of event to noon
+        } else if (($('#meal').val()) == "dinner") {
+            newdate.setHours(18); // automatically set the time of event to 6PM
         };
     
-        $("#calendar").fullCalendar('addEventSource',
+        calendar.fullCalendar('renderEvent',
             {
+                // title: 'testing',
+                // start: '2016-05-03'
                 title: $('#recipeName').val(),
-                start: d,
-                end: d.setMinutes(d.getMinutes() + 60)
+                start: newdate,
+               end: newdate.setMinutes(newdate.getMinutes() + 60)
             },
             true);
-        $("#calendar").fullCalendar('rerenderEvents');
+        calendar.fullCalendar('rerenderEvents');
 
+        console.log("done!")
        };
 }); 
-
-
-// function doSubmit(){
-//         $("#add").popup('close');
-//         console.log($('#meal').val());
-//         console.log($('#date').val());
-//         alert("form submitted");
-
-//         $("#calendar").fullCalendar('renderEvent',
-//             {
-//                 title: $('#recipeName').val(),
-//                 start: new Date($('#date').val()),
-//             },
-//             true);
-//         $("#calendar").fullCalendar('rerenderEvents');
-//         alert("added to calendar");
-//        };
 
 
 // allergy form
