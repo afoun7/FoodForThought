@@ -44,7 +44,8 @@
                                   <!-- <img class="plusImg" src="static/plusIcon.png"> -->
 
                                   <div data-role="popup" id="add" class="ui-content" style="min-width:250px;">
-                                    <form method="post" action="javascript:doSubmit();">
+                               <!--    action="javascript:doSubmit();" -->
+                                    <form method="POST" action={{"/search/add"}}>
                                       <div>
                                         <h3>Add recipe</h3>
                                         <input type="hidden" id=recipeName value={{result["title"]}} />

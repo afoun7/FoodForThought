@@ -38,7 +38,8 @@ ingredients_collection.ensure_index([
 
 def get_matches(query, allergies):
     '''Takes in the user's search box input and returns the
-    matching results from the mongodb database'''
+    matching results from the mongodb database. Does not return
+    any recipes that the user is allergic to.'''
 
     text_results = recipes_collection.aggregate(
         [

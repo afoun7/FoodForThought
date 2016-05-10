@@ -12,6 +12,7 @@ from werkzeug.security import generate_password_hash
 from pymongo.errors import DuplicateKeyError
 from pymongo import MongoClient
 import recipeQueries
+import user
 import sys
 import operator
 import json
@@ -166,6 +167,14 @@ def search():
         query = request.form['search']
         results = recipeQueries.get_matches(query, current_user.allergies)
     return render_template('search.html', results=results)
+
+@app.route('/search/add', methods=['POST', 'GET'])
+def addrecipe():
+    if request.method == 'POST':
+        date = request.form['date']
+        recipe = request.form['meal']
+        user.addToCalendar(date,recipe)
+    return render_template('search.html')
 
 @app.route('/recipe/<recipe_id>')
 def recipe(recipe_id):

@@ -79,6 +79,8 @@ class User():
         if date not in self.calendar:
             self.calendar[date] = []
         self.calendar[date].push(recipe)
+        update_dict = {"calender": self.calender}
+        self.update(update_dict)
 
 
     # def validate_login(self, password):
