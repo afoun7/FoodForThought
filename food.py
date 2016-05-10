@@ -164,7 +164,7 @@ def search():
     results = None
     if request.method=='POST':
         query = request.form['search']
-        results = recipeQueries.get_matches(query)
+        results = recipeQueries.get_matches(query, current_user.allergies)
     return render_template('search.html', results=results)
 
 @app.route('/recipe/<recipe_id>')

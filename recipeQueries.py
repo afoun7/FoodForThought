@@ -36,15 +36,10 @@ ingredients_collection.ensure_index([
 )
 
 
-def get_matches(query):
+def get_matches(query, allergies):
     '''Takes in the user's search box input and returns the
     matching results from the mongodb database'''
-   # query = request.form['q']
 
-   #  text_results = recipes_collection.find({"$text": {"$search": query}})
-   #  results = [doc["title"] for doc in text_results]
-   #  print results
-   #  return results
     text_results = recipes_collection.aggregate(
         [
             {"$match": {"$text": {"$search": query}}},
@@ -57,15 +52,28 @@ def get_matches(query):
     results = []
     returned_docs = text_results
 
-    # Amanda commented the following two lines. It was not
-    # yielding any search results when these two lines were included.
-    # Unsure why this is.
    # if ("result") in text_results:
     #  returned_docs = text_results["result"]
 
     for doc in returned_docs:
-    # for doc in text_results:
-      results.append(doc)
+      allergic = False
+      for ingred in (doc["ingredients"]): # doc["ingredients"] is a list of dictionaries
+          if allergic == False: 
+            ingred_cursor = ingredients_collection.find({"_id":ingred["ingredientID"]})
+            for ing in ingred_cursor:
+                if allergic == True:
+                  break
+                else:
+                  for allergy in allergies:
+                    if allergy.lower() in ing["name"].lower():
+                      print (allergy)
+                      print (ing["name"])
+                      allergic = True
+                      break 
+          else: # allergic == True
+            break # move onto next recipe 
+      if allergic == False:
+          results.append(doc)
     return results
 
 def get_recipe(recipe_id):
