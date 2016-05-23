@@ -1,34 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<!-- header/nav bar with hamburger menu -->
-<div data-role="page" id="menu-page" data-url="{{url_for('preferences')}}">
-  <div data-role="header">
-        <h1>Preferences</h1>
-        <a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Menu</a> 
-    </div><!-- /header -->
-
-    <div class="ui-content">
 
     <h1>Preferences page</h1>
 
-    </div><!-- /content -->
-
-    <!-- hamburger menu contents -->
-    <div data-role="panel" id="left-panel" class="noIcon">
-      <!-- <img src="static/apple.png" id="logo"> -->
-        <ul data-role="listview">
-                 <li><a href="{{url_for('search')}}">Home</a></li>
-                <li><a href="{{url_for('calendar')}}">Calendar</a></li>
-                <li><a href="{{url_for('coupons')}}">Coupons</a></li>
-                <li><a href="{{url_for('swipe')}}">Swipe</a></li>
-                <li><a href="{{url_for('list')}}">Shopping List</a></li>
-                <li><a href="{{url_for('preferences')}}">Preferences</a></li>
-                <li><a href="{{url_for('help')}}">Help</a></li>
-        </ul>
-    </div><!-- /panel -->
-</div>
-
-<script src="/static/scripts.js"></script>
 
 {% endblock %}
