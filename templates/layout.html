@@ -17,14 +17,17 @@
 
             <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js', _external=True) }}"></script>
             <script src="{{ url_for('static', filename='js/jquery.mobile-1.4.5.min.js', _external=True) }}"></script>
-            <script src="https://rawgithub.com/jquery/jquery-ui/1-10-stable/ui/jquery.ui.datepicker.js"></script>
-            <script src="https://rawgithub.com/arschmitz/jquery-mobile-datepicker-wrapper/master/jquery.mobile.datepicker.js"></script>
-            <script type="text/javascript" src="{{ url_for('static', filename='js/scripts.js', _external=True) }}"></script> 
+            <script src="{{ url_for('static', filename='js/jquery.mobile.datepicker.js', _external=True) }}"></script>
+            <script src="{{ url_for('static', filename='js/scripts.js', _external=True) }}" type="text/javascript" ></script> 
             <script src="{{ url_for('static', filename='js/bootstrap.min.js', _external=True) }}"></script>
 
             <!--FullCalendar-->
             <script type='text/javascript' src="{{ url_for('static', filename='js/fullcalendar.min.js', _external=True) }}"></script>
-            <link rel='stylesheet' type='text/css' href="{{ url_for('static', filename='css/fullcalendar.css', _external=True) }}" />     
+            <link rel='stylesheet' type='text/css' href="{{ url_for('static', filename='css/fullcalendar.css', _external=True) }}" /> 
+
+            <script type=text/javascript>
+              $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+            </script>    
     </head>
     <body>
 
@@ -46,7 +49,7 @@
         <a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Menu</a> 
     </div><!-- /header -->
 
-    <div class="ui-content">
+<div class="ui-content">
   {% block body %}
   {% endblock %}
     </div>

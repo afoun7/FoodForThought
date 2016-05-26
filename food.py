@@ -176,7 +176,18 @@ def addrecipe():
         date = request.form['date']
         recipe = request.form['meal']
         user.addToCalendar(date,recipe)
+        flash("recipe added to calender")
     return render_template('search.html')
+
+@app.route('/_add_recipe')
+def add_recipe():
+    meal = request.args.get('meal', 0, type=str)
+    date = request.args.get('date', 0, type=str)
+    recipe_id = request.args.get('id', 0, type=str)
+    name = request.args.get('name', 0, type=str)
+    #logic for adding recipe to user database
+    flash("recipe %s added to your calendar!"%name)
+    return jsonify(status='ok')
 
 @app.route('/recipe/<recipe_id>')
 def recipe(recipe_id):

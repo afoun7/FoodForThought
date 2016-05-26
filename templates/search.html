@@ -3,6 +3,23 @@
 
 <!-- header/nav bar with hamburger menu -->
 
+<script>
+  $(function() {
+    $('a#addRecipe').bind('click', function() {
+      $.getJSON($SCRIPT_ROOT + '/_add_recipe', {
+        meal: $('input[name="meal"]').val(),
+        name: $('input[id="recipeName"]').val(),
+        id: $('input[id="recipeID"]').val(),
+        date: $('input[name="date"]').val()
+      }, function(data) {
+        console.log(data.status)
+        $("#addButton").text(data.status);
+      });
+      return false;
+    });
+  });
+</script>
+
       <form class="searchbox" method="POST" action={{"/search"}}>
         <input type="search" name="search" id="search-basic" value="" />
       </form>
@@ -27,24 +44,26 @@
                                </div>
                                
                              <div class="plusSign">
-                                  <a href="#add" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all ui-icon-plus"></a>
+                                  <a href="#add" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all ui-icon-plus">
+                                    <img src="{{ url_for('static', filename='img/calendar.png', _external=True) }}" width="20"/>
+                                  </a>
                                   <!-- <img class="plusImg" src="static/plusIcon.png"> -->
 
                                   <div data-role="popup" id="add" class="ui-content" style="min-width:250px;">
-                               <!--    action="javascript:doSubmit();" -->
-                                    <form method="POST" action={{"/search/add"}}>
                                       <div>
                                         <h3>Add recipe</h3>
-                                        <input type="hidden" id=recipeName value={{result["title"]}} />
+                                        <input type="hidden" id="recipeName" value={{result.title}} />
+                                        <input type="hidden" id="recipeID" value={{result._id}} />
                                          <select name="meal" id="meal">
                                             <option value="breakfast">Breakfast</option>
                                             <option value="lunch">Lunch</option>
                                             <option value="dinner">Dinner</option>
                                          </select>
-                                        <input type="date" id="date">
-                                        <input type="submit" data-inline="true">
+                                        <input name="date" type="date" id="date">
+                                        <a href="#" id="addRecipe"><button name="addButton"> Add Recipe </button></a>
+<!--                                         <input type="submit" data-inline="true"> -->
                                       </div>
-                                    </form>
+<!--                                     </form> -->
                                   </div> <!--popup-->
 
                                 </div> <!--plusSign-->
