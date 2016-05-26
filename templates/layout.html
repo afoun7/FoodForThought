@@ -5,27 +5,26 @@
       <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
         <title>Food for Thought</title>
 
-            <script src="static/js/jquery-1.11.3.min.js"></script>
-            <script src="static/js/jquery-ui.min.js"></script>
+        
+            <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/style.css', _external=True) }}">
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css', _external=True) }}">
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css', _external=True) }}">
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.mobile-1.4.5.min.css', _external=True) }}">
+            <link rel="stylesheet" href="https://rawgithub.com/arschmitz/jquery-mobile-datepicker-wrapper/master/jquery.mobile.datepicker.css" />       
 
-            <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/style.css') }}">
-            <link rel="stylesheet" href="static/css/bootstrap.min.css">
-            <link rel="stylesheet" href="static/css/jquery-ui.css">
-            <link rel="stylesheet" href="static/css/jquery.mobile-1.4.5.min.css">
-            <link rel="stylesheet" href="https://rawgithub.com/arschmitz/jquery-mobile-datepicker-wrapper/master/jquery.mobile.datepicker.css" />
-            
-            <script src="static/js/jquery-1.11.3.min.js"></script>
-            <script src="static/js/jquery.mobile-1.4.5.min.js"></script>
+            <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js', _external=True) }}"></script>
+            <script src="{{ url_for('static', filename='js/jquery-ui.min.js', _external=True) }}"></script>
+
+            <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js', _external=True) }}"></script>
+            <script src="{{ url_for('static', filename='js/jquery.mobile-1.4.5.min.js', _external=True) }}"></script>
             <script src="https://rawgithub.com/jquery/jquery-ui/1-10-stable/ui/jquery.ui.datepicker.js"></script>
             <script src="https://rawgithub.com/arschmitz/jquery-mobile-datepicker-wrapper/master/jquery.mobile.datepicker.js"></script>
-            <script type="text/javascript" src="static/js/scripts.js"></script> 
-            <script src="static/js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="{{ url_for('static', filename='js/scripts.js', _external=True) }}"></script> 
+            <script src="{{ url_for('static', filename='js/bootstrap.min.js', _external=True) }}"></script>
 
             <!--FullCalendar-->
-            <script type='text/javascript' src='static/js/fullcalendar.min.js'></script>
-            <link rel='stylesheet' type='text/css' href='static/css/fullcalendar.css' />
-
-
+            <script type='text/javascript' src="{{ url_for('static', filename='js/fullcalendar.min.js', _external=True) }}"></script>
+            <link rel='stylesheet' type='text/css' href="{{ url_for('static', filename='css/fullcalendar.css', _external=True) }}" />     
     </head>
     <body>
 
@@ -56,7 +55,6 @@
     </div>
   {% include 'sidebar.html' %}
 </div>
-<script src="/static/js/scripts.js"></script>
      
     </body>
 </html>
