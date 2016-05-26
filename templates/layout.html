@@ -5,7 +5,7 @@
       <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
         <title>Food for Thought</title>
 
-        
+
             <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/style.css', _external=True) }}">
             <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css', _external=True) }}">
             <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css', _external=True) }}">
@@ -27,9 +27,6 @@
             <link rel='stylesheet' type='text/css' href="{{ url_for('static', filename='css/fullcalendar.css', _external=True) }}" />     
     </head>
     <body>
-
-
-
 
 <!-- gets the flash messages from flask to show up -->
   {% with messages = get_flashed_messages() %}
@@ -53,8 +50,15 @@
   {% block body %}
   {% endblock %}
     </div>
-  {% include 'sidebar.html' %}
+  {% if current_user.is_authenticated %}
+    {% include 'sidebar.html' %}
+  {% endif %}
 </div>
+
+
+
+
+
      
     </body>
 </html>

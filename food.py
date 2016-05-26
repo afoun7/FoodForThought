@@ -47,7 +47,7 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('login')) # go back to login page
+    return redirect(url_for('search')) # go back to login page
 
 @login_manager.user_loader # user_loader callback is used to reload the user object from the user ID stored in the session
 def load_user(username): 
@@ -76,7 +76,7 @@ class RegistrationForm(Form):
 
 
 @app.route('/register', methods=['GET', 'POST'])
-def register_page():
+def register():
     print ("in register_page")
     try:
         form = RegistrationForm(request.form) # allows us to render the form
@@ -162,6 +162,8 @@ def search():
     # if not current_user.is_anonymous():
     #     print (current_user.username)
     #     print (current_user.allergies + current_user.restrictions)
+    if not(current_user.is_authenticated and not (current_user.is_anonymous())):
+        return render_template('new_user.html')
     results = None
     if request.method=='POST':
         query = request.form['search']
