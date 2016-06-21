@@ -65,6 +65,8 @@ class User():
             self.time = update_dict["time"]
         if "meal" in update_dict:
             self.meal = update_dict["meal"]
+        if "calendar" in update_dict:
+            self.calendar = update_dict["calendar"]
 
 
     def save(self):
@@ -76,10 +78,12 @@ class User():
 
     def addToCalendar(self, date, recipe):
         # values are list of recipe ids
+        print self.calendar
         if date not in self.calendar:
             self.calendar[date] = []
-        self.calendar[date].push(recipe)
-        update_dict = {"calender": self.calender}
+        self.calendar[date].append(recipe)
+        print self.calendar
+        update_dict = {"calendar": self.calendar}
         self.update(update_dict)
 
 

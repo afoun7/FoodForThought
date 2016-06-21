@@ -170,22 +170,24 @@ def search():
         results = recipeQueries.get_matches(query, current_user.allergies)
     return render_template('search.html', results=results)
 
-@app.route('/search/add', methods=['POST', 'GET'])
-def addrecipe():
-    if request.method == 'POST':
-        date = request.form['date']
-        recipe = request.form['meal']
-        user.addToCalendar(date,recipe)
-        flash("recipe added to calender")
-    return render_template('search.html')
+# @app.route('/search/add', methods=['POST', 'GET'])
+# def addrecipe():
+#     if request.method == 'POST':
+#         date = request.form['date']
+#         recipe = request.form['meal']
+#         user.addToCalendar(date,recipe)
+#         flash("recipe added to calender")
+#     return render_template('search.html')
 
-@app.route('/_add_recipe')
+@app.route('/_add_recipe', methods=['POST', 'GET'])
 def add_recipe():
     meal = request.args.get('meal', 0, type=str)
     date = request.args.get('date', 0, type=str)
     recipe_id = request.args.get('id', 0, type=str)
     name = request.args.get('name', 0, type=str)
     #logic for adding recipe to user database
+    current_user.addToCalendar(date,recipe_id)
+    print "_add_recipe %s %s %s %s"%(meal, date, recipe_id, name) 
     flash("recipe %s added to your calendar!"%name)
     return jsonify(status='ok')
 
