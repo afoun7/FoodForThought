@@ -10,8 +10,9 @@
 
       $.getJSON($SCRIPT_ROOT + '/_add_recipe', {
         meal: $clicked.parent().find($('input[name="meal"]')).val(),
-        name: $clicked.parent().find($('input[id="recipeName"]')).val(),
+        title: $clicked.parent().find($('input[id="recipeName"]')).val(),
         id: $clicked.parent().find($('input[id="recipeID"]')).val(),
+        image: $clicked.parent().find($('input[id="recipeImage"]')).val(),
         date: $clicked.parent().find($('input[name="date"]')).val()
       }, function(data) {
         console.log(data.status)
@@ -56,6 +57,7 @@
                                         <h3>Add recipe</h3>
                                         <input type="hidden" id="recipeName" value='{{result.title}}' />
                                         <input type="hidden" id="recipeID" value={{result._id}} />
+                                        <input type="hidden" id="recipeImage" value={{result["photo"]["urls"][-1]["url"]|string}} />
                                          <select name="meal" id="meal">
                                             <option value="breakfast">Breakfast</option>
                                             <option value="lunch">Lunch</option>

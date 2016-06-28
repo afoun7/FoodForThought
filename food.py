@@ -1,5 +1,6 @@
 # Amanda Foun
 
+from datetime import date
 from flask import Flask, render_template, request, jsonify, redirect, flash, session, g
 from flask.ext.login import current_user, LoginManager, UserMixin, login_required, login_user, logout_user, url_for 
 from forms import LoginForm  
@@ -16,6 +17,7 @@ import user
 import sys
 import operator
 import json
+import datetime
 
 app = Flask(__name__) # create instance of Flask class
 #app.config.from_object(__name__)
@@ -184,11 +186,13 @@ def add_recipe():
     meal = request.args.get('meal', 0, type=str)
     date = request.args.get('date', 0, type=str)
     recipe_id = request.args.get('id', 0, type=str)
+    recipe_title = request.args.get('title', 0, type=str)
+    recipe_image = request.args.get('image', 0, type=str)
     name = request.args.get('name', 0, type=str)
     #logic for adding recipe to user database
-    current_user.addToCalendar(date,recipe_id)
-    print "_add_recipe %s %s %s %s"%(meal, date, recipe_id, name) 
-    flash("recipe %s added to your calendar!"%name)
+    recipe = {"id":recipe_id, "title":recipe_title, "image":recipe_image}
+    current_user.addToCalendar(date,recipe)
+    flash("%s added to your calendar!"%name)
     return jsonify(status='ok')
 
 @app.route('/recipe/<recipe_id>')
@@ -211,7 +215,17 @@ def coupons():
 
 @app.route('/calendar')
 def calendar():
-    return render_template('calendar.html')
+    calendar = current_user.get_calendar()
+    parsed_calendar = []
+    day = date.today()
+    for i in range(30):
+        day_str = day.strftime('%Y-%m-%d')
+        day_recipes = calendar[day_str] if day_str in calendar else []
+        day_dict = {"date":day.strftime('%A, %m-%d-%y'), "recipes":day_recipes}
+        parsed_calendar.append(day_dict)
+        day = day + datetime.timedelta(days=1)
+        
+    return render_template('calendar.html',calendar=parsed_calendar)
 
 @app.route('/help')
 def help():

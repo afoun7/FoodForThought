@@ -3,11 +3,6 @@ $(document).ready(function() {
     var d = date.getDate();
     var m = date.getMonth();
     var y = date.getFullYear();
-    var calendar = $('#calendar').fullCalendar({
-      defaultView: 'basicWeek',
-      editable: true,
-      selectable: true,
-    });
 
     $('#submitButton').on('click', function(e){
     // We don't want this to act as a link so cancel the link action

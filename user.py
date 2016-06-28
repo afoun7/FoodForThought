@@ -36,6 +36,9 @@ class User():
     def get_id(self): # returns a unicode that uniquely identifies the user
         return self.username
 
+    def get_calendar(self):
+        return self.calendar
+
     def get(self, id):
         user = users_collection.find_one({"_id": id})
         if user:
@@ -78,11 +81,9 @@ class User():
 
     def addToCalendar(self, date, recipe):
         # values are list of recipe ids
-        print self.calendar
         if date not in self.calendar:
             self.calendar[date] = []
         self.calendar[date].append(recipe)
-        print self.calendar
         update_dict = {"calendar": self.calendar}
         self.update(update_dict)
 

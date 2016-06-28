@@ -5,25 +5,19 @@
       <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
         <title>Food for Thought</title>
 
+            <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
 
-            <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/style.css', _external=True) }}">
             <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css', _external=True) }}">
             <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css', _external=True) }}">
             <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.mobile-1.4.5.min.css', _external=True) }}">
-            <link rel="stylesheet" href="https://rawgithub.com/arschmitz/jquery-mobile-datepicker-wrapper/master/jquery.mobile.datepicker.css" />       
+
+            <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/style.css', _external=True) }}">     
 
             <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js', _external=True) }}"></script>
             <script src="{{ url_for('static', filename='js/jquery-ui.min.js', _external=True) }}"></script>
-
-            <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js', _external=True) }}"></script>
             <script src="{{ url_for('static', filename='js/jquery.mobile-1.4.5.min.js', _external=True) }}"></script>
-            <script src="{{ url_for('static', filename='js/jquery.mobile.datepicker.js', _external=True) }}"></script>
             <script src="{{ url_for('static', filename='js/scripts.js', _external=True) }}" type="text/javascript" ></script> 
             <script src="{{ url_for('static', filename='js/bootstrap.min.js', _external=True) }}"></script>
-
-            <!--FullCalendar-->
-            <script type='text/javascript' src="{{ url_for('static', filename='js/fullcalendar.min.js', _external=True) }}"></script>
-            <link rel='stylesheet' type='text/css' href="{{ url_for('static', filename='css/fullcalendar.css', _external=True) }}" /> 
 
             <script type=text/javascript>
               $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
