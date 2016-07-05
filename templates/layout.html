@@ -37,7 +37,13 @@
     {% endif %}
   {% endwith %}
 
+
+
 <div data-role="page" id="menu-page">
+<!--   {% for message in get_flashed_messages() %}
+    <div class=flash>{{ message }}</div>
+  {% endfor %} -->
+  
   <div data-role="header">
         <h1>Food For Thought</h1>
         <a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Menu</a> 

@@ -58,13 +58,11 @@ function getAverageRGB(imgEl) {
 		</div>
             {% if day.recipes|length > 0 %}
             	{% for recipe in day.recipes %}
-            		<div class="row">
-  						<div class="span12" style={{"background-image:url('"+recipe.image+"');background-repeat:no-repeat;background-size:80%;"}}>{{ recipe.title }}</div>
-					</div>
+  						<a href={{'/recipe/'~ (recipe.id)}} data-transition="slide"><pre style={{"background-image:url('"+recipe.image+"');background-repeat:no-repeat;background-size:100%;"}}>{{ recipe.title }}</pre></a>
             	{% endfor %}
             {% else %}
                  <div class="row">
-  						<div class="span12">No recipes here yet. Add a recipe!</div>
+  						No recipes here yet. Add a recipe!
 				</div>
 			{% endif %}
       	{% endfor %}

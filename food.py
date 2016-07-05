@@ -192,6 +192,7 @@ def add_recipe():
     #logic for adding recipe to user database
     recipe = {"id":recipe_id, "title":recipe_title, "image":recipe_image}
     current_user.addToCalendar(date,recipe)
+    flash('hello!!')
     flash("%s added to your calendar!"%name)
     return jsonify(status='ok')
 
