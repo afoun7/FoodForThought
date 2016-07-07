@@ -1,0 +1,21 @@
+{% extends "material/base.html" %}
+{% import "material/utils.html" as util %}
+{% import "material/wtf.html" as wtf %}
+
+{% block styles %}
+{{ super() }}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% endblock %}
+{% block title %}Super Glue Search{% endblock %}
+
+{% block content %}
+{{ container() }}
+        {{ row() }}
+                {{ col(['s3']) }}
+                {{ enddiv() }}
+                {{ col(['s9'])}}
+                	{{ util.card('Results will show up here','',[['http://wallofnow.um-dokku.media.mit.edu', 'Wall Of Now'],['http://as-you-need-it.um-dokku.media.mit.edu', 'As You Need It']])}}
+            	{{ enddiv() }}
+        {{ enddiv() }}
+{{ enddiv() }}
+{% endblock %}

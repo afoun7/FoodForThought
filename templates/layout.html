@@ -1,67 +1,45 @@
-<!doctype html>
-<html>
-    <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-      <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
-        <title>Food for Thought</title>
+{% extends "material/base.html" %}
+{% import "material/utils.html" as util %}
+{% import "material/wtf.html" as wtf %}
 
-            <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
-
-            <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css', _external=True) }}">
-            <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css', _external=True) }}">
-            <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.mobile-1.4.5.min.css', _external=True) }}">
-
-            <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/style.css', _external=True) }}">     
-
-            <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js', _external=True) }}"></script>
-            <script src="{{ url_for('static', filename='js/jquery-ui.min.js', _external=True) }}"></script>
-            <script src="{{ url_for('static', filename='js/jquery.mobile-1.4.5.min.js', _external=True) }}"></script>
-            <script src="{{ url_for('static', filename='js/scripts.js', _external=True) }}" type="text/javascript" ></script> 
-            <script src="{{ url_for('static', filename='js/bootstrap.min.js', _external=True) }}"></script>
-
-            <script type=text/javascript>
-              $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-            </script>    
-    </head>
-    <body>
-
-<!-- gets the flash messages from flask to show up -->
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      {% for message in messages %}
-        <div class="alert alert-warning alert-dismissible" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-        {{message}}
-        </div>
-      {% endfor %}
-    {% endif %}
-  {% endwith %}
+{% block styles %}
+{{ super() }}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% endblock %}
 
 
-
-<div data-role="page" id="menu-page">
-<!--   {% for message in get_flashed_messages() %}
-    <div class=flash>{{ message }}</div>
-  {% endfor %} -->
-  
-  <div data-role="header">
-        <h1>Food For Thought</h1>
-        <a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Menu</a> 
-    </div><!-- /header -->
-
-<div class="ui-content">
-  {% block body %}
-  {% endblock %}
-    </div>
-  {% if current_user.is_authenticated %}
+{% if current_user.is_authenticated %}
     {% include 'sidebar.html' %}
-  {% endif %}
-</div>
+{% endif %}
 
+{% block scripts %}
+{{ super() }}
+<script>
+  $(function() {
+    $('a#addRecipe').bind('click', function() {
+      var $clicked = $(this);
 
+      $.getJSON($SCRIPT_ROOT + '/_add_recipe', {
+        meal: $clicked.parent().find($('input[name="meal"]')).val(),
+        title: $clicked.parent().find($('input[id="recipeName"]')).val(),
+        id: $clicked.parent().find($('input[id="recipeID"]')).val(),
+        image: $clicked.parent().find($('input[id="recipeImage"]')).val(),
+        date: $clicked.parent().find($('input[name="date"]')).val()
+      }, function(data) {
+        console.log(data.status)
+        $("#addButton").text(data.status);
+      });
+      //return false;
+    });
+  });
+</script>
 
+<script>
+  $(function(){
 
+    $('.button-collapse').sideNav();
 
-     
-    </body>
-</html>
+  }); // end of document ready
+
+</script>
+{% endblock %}

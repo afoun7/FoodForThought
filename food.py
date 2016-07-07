@@ -2,7 +2,7 @@
 
 from datetime import date
 from flask import Flask, render_template, request, jsonify, redirect, flash, session, g
-from flask.ext.login import current_user, LoginManager, UserMixin, login_required, login_user, logout_user, url_for 
+from flask_login import current_user, LoginManager, UserMixin, login_required, login_user, logout_user, url_for 
 from forms import LoginForm  
 from user import User
 from flask.ext.wtf import Form
@@ -18,8 +18,11 @@ import sys
 import operator
 import json
 import datetime
+from flask_material import Material
+import os
 
 app = Flask(__name__) # create instance of Flask class
+Material(app) 
 #app.config.from_object(__name__)
 app.config.from_object('config')
 login_manager = LoginManager()
@@ -166,10 +169,10 @@ def search():
     #     print (current_user.allergies + current_user.restrictions)
     if not(current_user.is_authenticated and not (current_user.is_anonymous())):
         return render_template('new_user.html')
-    results = None
-    if request.method=='POST':
-        query = request.form['search']
-        results = recipeQueries.get_matches(query, current_user.allergies)
+    # results = None
+    # if request.method=='POST':
+    #     query = request.form['search']
+    results = recipeQueries.get_suggested_recipes(current_user.allergies, current_user.cooked_recipes)
     return render_template('search.html', results=results)
 
 # @app.route('/search/add', methods=['POST', 'GET'])
@@ -245,8 +248,17 @@ def list(recipe_id):
     recipe = recipeQueries.get_recipe(recipe_id)
     return render_template('list.html',recipe=recipe)
 
+# not for production. for debugging
+extra_dirs = ['templates','static']
+extra_files = extra_dirs[:]
+for extra_dir in extra_dirs:
+    for dirname, dirs, files in os.walk(extra_dir):
+        for filename in files:
+            filename = os.path.join(dirname, filename)
+            if os.path.isfile(filename):
+                extra_files.append(filename)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=True, extra_files=extra_files)
     

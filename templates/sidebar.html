@@ -1,6 +1,5 @@
-<div data-role="panel" id="left-panel" class="noIcon">
-      <!-- <img src="{{ url_for('static', filename='img/pot.png', _external=True) }}" id="logo"> -->
-        <ul data-role="listview">
+
+  <ul id="slide-out" class="side-nav">
                 <li><a href="{{url_for('search')}}">Home</a></li>
                 <li><a href="{{url_for('calendar')}}">Calendar</a></li>
                 <li><a href="{{url_for('coupons')}}">Coupons</a></li>
@@ -8,5 +7,6 @@
                 <li><a href="{{url_for('list')}}">Shopping List</a></li>
                 <li><a href="{{url_for('preferences')}}">Preferences</a></li>
                 <li><a href="{{url_for('help')}}">Help</a></li>
-        </ul>
-</div>
+  </ul>
+  <a href="#" data-activates="slide-out" class="button-collapse btn-large show-on-large"><i class="material-icons">menu</i></a>
+<!--   btn-floating for circle -->

@@ -23,6 +23,7 @@ class User():
         self.time = None
         self.meal = None
         self.calendar = {}
+        self.cooked_recipes = []
 
     def is_authenticated(self): # if provide valid credentials
         return True
@@ -70,6 +71,8 @@ class User():
             self.meal = update_dict["meal"]
         if "calendar" in update_dict:
             self.calendar = update_dict["calendar"]
+        if "cooked_recipes" in update_dict:
+            self.cooked_recipes = update_dict["cooked_recipes"]
 
 
     def save(self):

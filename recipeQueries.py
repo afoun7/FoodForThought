@@ -35,6 +35,17 @@ ingredients_collection = db['ingredients']
 #   }
 # )
 
+def get_suggested_recipes(allergies, cooked_recipes):
+    recipes = recipes_collection.aggregate(
+        [ { "$sample": { "size": 40 } } ]
+    )
+    results = []
+    returned = []
+    for recipe in recipes:
+        if recipe not in cooked_recipes and recipe not in returned:
+            returned.append(recipe)
+            results.append(recipe)
+    return results
 
 def get_matches(query, allergies):
     '''Takes in the user's search box input and returns the

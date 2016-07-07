@@ -1,21 +1,26 @@
 {% extends "layout.html" %}
-{% block body %}
+{% block content %}
 
+{{ container() }}
+  <div class="row">
+    <div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s4"><a class="active" href="#summary">Summary</a></li>
+        <li class="tab col s4"><a href="#ingredients">Ingredients</a></li>
+        <li class="tab col s4"><a href="#steps">Steps</a></li>
+      </ul>
+    </div>
+    </div>
 
-<ul class="nav nav-tabs nav-justified" id="tabs">
-  <li class="active"><a data-toggle="tab" data-target="#summary">Summary</a></li>
-  <li><a data-toggle="tab" data-target="#ingredients">Ingredients</a></li>
-  <li><a data-toggle="tab" data-target="#steps">Steps</a></li>
-</ul>
-<div class="tab-content">
-    <div id="summary" class="tab-pane fade in active">
+  <div>
+    <div id="summary">
       <br>
       <div class="recipe-photo"><img src="{{recipe["photo"]["urls"][3]["url"]|string}}"></div>
       <br>
        <p>{{recipe.description}}</p>
     </div>
 
-    <div id="ingredients" class="tab-pane fade">
+    <div id="ingredients">
     <br>
       <h4> Ingredients: </h4>
         <ul>
@@ -25,7 +30,7 @@
         </ul>
     </div>
 
-    <div id="steps" class="tab-pane fade">
+    <div id="steps">
       <br>
         <ol>
           {% for step in recipe.directions %}
@@ -35,5 +40,5 @@
     </div>
 </div>
 
- 
+{{ enddiv() }}
 {% endblock %}
