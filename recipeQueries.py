@@ -45,6 +45,7 @@ def get_suggested_recipes(allergies, cooked_recipes):
         if recipe not in cooked_recipes and recipe not in returned:
             returned.append(recipe)
             results.append(recipe)
+    print ("results len: %d"%len(results))
     return results
 
 def get_matches(query, allergies):
