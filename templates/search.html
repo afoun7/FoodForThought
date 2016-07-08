@@ -16,7 +16,7 @@
   {% endif %}
 </div>
 
-{% if results %}
+{% if results|length>0 %}
 <div id="results">
   {% for recipe in results %}
   {% set id = recipe._id|string %}
