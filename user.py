@@ -4,7 +4,7 @@
 from werkzeug.security import check_password_hash
 from pymongo import MongoClient
 
-mongo_client = MongoClient('mongodb://viral:ViralViral@ds011271.mlab.com:11271/recipes_users')
+mongo_client = MongoClient('xxxxxx')
 users_db = mongo_client['recipes_users']
 users_collection = users_db.users
 
